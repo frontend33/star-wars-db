@@ -1,4 +1,4 @@
-
+// Разделять ответственность компонентов: логику и рендеринг
 // Код который работает с сетью лучше изолировать в отдельный класс-сервис
 export default class SwapiService {
     _apiBase = 'https://swapi.co/api'
@@ -40,6 +40,7 @@ export default class SwapiService {
         const idRegExp = /\/([0-9])*\/$/
         return item.url.match(idRegExp)[1]
     }
+    // Трансформируйте данные до того как их получит компонент
     _transformPlanet(planet) {
         return {
             id: this._extractId(planet),
