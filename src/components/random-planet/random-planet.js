@@ -12,10 +12,28 @@ export default class RandomPlanet extends Component {
         error: false
     }
 
+
+    /* 1) В начале компонент создается через конструктор constructor()
+       2) Функция рендер возвращает дерево реакт элементов, элементы превращаютс в DOM элементы которые за тем
+       добавляются к DOM дереву на странице 
+    */
+
     constructor() {
         super()
+        console.log('constructor()')
         // В конструкторе компонента вызываем сервис, который получит данные
         this.updatePlanet()
+        this.interval = setInterval(this.updatePlanet, 15500)
+        // clearInterval(this.interval)
+    }
+
+    componentDidMount() {
+        console.log(' componentDidMount Dead mount')
+    }
+
+    // Вызовится перед тем как компонент удалится со страницы
+    componentWillUnmount() {
+        console.log(' componentWillUnmount')
     }
 
     onPlanetLoaded = (planet) => {
@@ -33,9 +51,10 @@ export default class RandomPlanet extends Component {
         })
     }
 
-    updatePlanet() {
-        const id = 12
-        // const id = Math.floor(Math.random() * 25 + 2)
+    updatePlanet = () => {
+        console.log('Update')
+        // const id = 12
+        const id = Math.floor(Math.random() * 25 + 3)
         this.SwapiService.getPlanet(id)
             // В then() обвновляем состояние компонента
             .then(this.onPlanetLoaded)
@@ -43,6 +62,7 @@ export default class RandomPlanet extends Component {
     }
 
     render() {
+        console.log('render')
         const { planet, loading, error } = this.state
         const hasData = !(loading || error)
         const errorMessage = error ? <ErrorIndicator /> : null

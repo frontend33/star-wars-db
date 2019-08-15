@@ -66,3 +66,35 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+
+### Lifecycle methods Методы жизненного цикла
+
+**MOUNTING**
+------------
+**componentDidMount()** Компонент подключен (DOM элементов уже на странице)
+-1) Когда компонент создается и первый раз отображается на странице
+вызывается конструктор реакт вызывает рендер затем componentDidMount()`
+### `constructor() => render() => componentDidMount()`
+
+**UPDATES**
+-----------
+**componentDidUpdate()** Компонент обновился
+-2) Второй этап после того как наш компонент отобразился когда он работает и может получать обновления
+UPDATES могут происходить благодаря двум событиям пришли новые свойства или компонент вызвал setState
+любое из этих событий приводит к тому что вызывается функция 
+### ` => render() => componentDidUpdate()`
+Реакт дает сделать что то после того как компонент обновится
+
+**UNMOUNTING**
+-------------
+**componentWillUnmount()** Компонент будет удален (Но DOM еще на странице)
+componentWillUnmount() 
+-3) Когда компонент становится не нужен и он удаляется со страницы
+Когда компонент становится не нужным componentWillUnmount() 
+
+**ERROR**
+---------
+**componentDidCatch()** когда в компоненте или в его child компонентах произошла ошибка
+-4) Этап ошибки, компонент получает ошибку которая не была поймана раньше
+
