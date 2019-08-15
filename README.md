@@ -68,13 +68,15 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
 
 
-### Lifecycle methods Методы жизненного цикла
+
+**Lifecycle methods Методы жизненного цикла**
 
 **MOUNTING**
 ------------
 **componentDidMount()** Компонент подключен (DOM элементов уже на странице)
 -1) Когда компонент создается и первый раз отображается на странице
-вызывается конструктор реакт вызывает рендер затем componentDidMount()`
+вызывается конструктор реакт вызывает рендер затем componentDidMount(). 
+Используется для инициализации (получение данных, работа с DOM и т д), когда метод вызван означает, что DOM элементы гаранитрованно находятся на странице и они проинициализированны. В этом месте уверены что DOM уже создан и другие библиотеки могут начать свою инициализацию испрользуя готовые элементы DOM дерева
 ### `constructor() => render() => componentDidMount()`
 
 **UPDATES**

@@ -8,7 +8,8 @@ import './app.css';
 
 export default class App extends Component {
   state = {
-    showRandomPlanet: true
+    showRandomPlanet: true,
+    selectedPerson: null
   }
 
   toggleRandomPlanet = () => {
@@ -16,6 +17,11 @@ export default class App extends Component {
       return {
         showRandomPlanet: !state.showRandomPlanet
       }
+    })
+  }
+  OnItemSelected = (id) => {
+    this.setState( {
+      selectedPerson: id
     })
   }
   render() {
@@ -33,10 +39,10 @@ export default class App extends Component {
   
           <div className="row mb2">
             <div className="col-md-6">
-              <ItemList />
+              <ItemList OnItemSelected={this.OnPersonSelected} />
             </div>
             <div className="col-md-6">
-              <PersonDetails />
+              <PersonDetails personId={this.state.selectedPerson}/>
             </div>
           </div>
         </div>
