@@ -18,7 +18,6 @@ export default class ItemList extends Component {
                 })
             })
     }
-
     renderItems(arr) {
         return arr.map(({ id, name }) => {
             return (
