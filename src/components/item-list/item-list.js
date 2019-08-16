@@ -6,15 +6,16 @@ export default class ItemList extends Component {
 
     swapiService = new SwapiService
     state = {
-        peopleList: null
+        itemList: null
     }
 
     componentDidMount() {
-        this.swapiService
-            .getAllPeople()
-            .then((peopleList) => {
+        const {getData} = this.props
+        getData()
+            .then((itemList) => {
+                // Передаем ответ сервера в state
                 this.setState({
-                    peopleList
+                    itemList
                 })
             })
     }
@@ -23,7 +24,7 @@ export default class ItemList extends Component {
             return (
                 <li className="list-group-item"
                     key={id}
-                    onClick={() => this.props.OnItemSelected(id)}>
+                    onClick={() => this.props.onItemSelected(id)}>
                     {name}
                 </li>
             )
@@ -31,12 +32,12 @@ export default class ItemList extends Component {
     }
 
     render() {
-        const { peopleList } = this.state
-        if (!peopleList) {
+        const { itemList } = this.state
+        if (!itemList) {
             return <Spinner />
         }
 
-        const items = this.renderItems(peopleList)
+        const items = this.renderItems(itemList)
         return (
             <ul className="item-list item-list-group" >
                 {items}

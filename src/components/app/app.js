@@ -8,8 +8,10 @@ import './app.css';
 import ErrorButton from '../error-button/error-button';
 import ErrorIndicator from '../error-indicator';
 import PeoplePage from '../people-page'
+import SwapiService from '../services/swapi-service';
 
 export default class App extends Component {
+  swapiService = new SwapiService
   state = {
     showRandomPlanet: true,
     selectedPerson: 5,
@@ -54,16 +56,40 @@ export default class App extends Component {
           </button>
           <ErrorButton />
           <PeoplePage />
-          <PeoplePage />
-          <PeoplePage />
-          {/* <div className="row mb2">
+          {/* <PeoplePage /> */}
+          {/* <PeoplePage /> */}
+          <div className="row mb2">
             <div className="col-md-6">
-              <ItemList OnItemSelected={this.OnPersonSelected} />
+              <ItemList OnItemSelected={this.OnPersonSelected} 
+              /*
+              Компонент может использовать функцию для получения данных
+              кроме того компонент может использовать внешнюю функцию для того что бы отрисовать его,
+              именно для использования внешней функции для рендеринга построен патерн проектирования - Render функция 
+              Функции которые мы передаем компоненту могут быть не только обработчиками событий
+              Функция может инкапсулировать получение данных и компонент становится не зависимым от источника
+              */  
+
+              getData={this.swapiService.getAllPlanets}
+              
+              />
             </div>
             <div className="col-md-6">
               <PersonDetails personId={this.state.selectedPerson}/>
             </div>
-          </div> */}
+          </div>
+
+          <div className="row mb2">
+            <div className="col-md-6">
+              <ItemList OnItemSelected={this.OnPersonSelected} 
+              getData={this.swapiService.getAllStarships}
+              
+              />
+            </div>
+            <div className="col-md-6">
+              <PersonDetails personId={this.state.selectedPerson}/>
+            </div>
+          </div>
+
         </div>
       );
     }

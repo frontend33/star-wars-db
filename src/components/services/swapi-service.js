@@ -2,7 +2,7 @@
 // Код который работает с сетью лучше изолировать в отдельный класс-сервис
 export default class SwapiService {
     _apiBase = 'https://swapi.co/api'
-    async getResource(url) {
+    getResource = async (url) => {
         // Чтобы получить данные с сервера нужно выполнить два вызова (каждый вернет Promise)
         const res = await fetch(`${this._apiBase}${url}`)
         // res.ok содержит true если result.status содержит один из ОК статусов (200-299)
@@ -11,31 +11,30 @@ export default class SwapiService {
         }
         return await res.json() //Кроме json есть и другие типы ответа arrayBuffer(), text(), formData(), blob()
     }
-    async getAllPeople() {
+    getAllPeople = async () => {
         const res = await this.getResource(`/people/`)
         console.log('getAllPeople', res)
          console.log('getAllPeople', res.results)
         return res.results.map(this._transformPerson)
     }
     
-    async getPerson(id) {
+    getPerson = async (id) => {
         const person = await this.getResource(`/people/${id}/`)
         return this._transformPerson(person)
     }
-    async getAllPlanets() {
-        const res = await this.getResource(`/planets/`)
-        console.log('zho', res.result)
-        return res.result.map(this._transformPlanet)
+    getAllPlanets = async () => {
+        const res = await this.getResource(`/planets/`);
+        return res.results.map(this._transformPlanet);
     }
-    async getPlanet(id) {
+    getPlanet = async (id) => {
         const planet = await this.getResource(`/planets/${id}`)
         return this._transformPlanet(planet)
     }
-    async getAllStarships() {
-        const res = await this.getResource(`/starships/`)
-        return res.result.map(this._transformStarship)
+    getAllStarships = async () => {
+        const res = await this.getResource(`/starships/`);
+        return res.results.map(this._transformStarship);
     }
-    getStarships(id) {
+    getStarship = async (id) => {
         const starship = this.getResource(`/starships/${id}`)
         return this._transformStarship(starship)
     }
