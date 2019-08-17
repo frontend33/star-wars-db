@@ -18,39 +18,60 @@ const Row = ({ left, right }) => {
     )
 }
 
-export default class PeoplePage extends Component {
-    swapiService = new SwapiService
+class ErrorBoundary extends Component {
     state = {
-        selectedPerson: 3,
         hasError: false
     }
-
     componentDidCatch(error, info) {
         debugger
         this.setState({
             hasError: true
         })
     }
-    onPersonSelected = (selectedPerson) => {
-        this.setState({ selectedPerson })
-    }
 
     render() {
         if (this.state.hasError) {
             return <ErrorIndicator />
         }
+        console.log('test children',this.props.children)
+        return this.props.children
+    }
+}
+// Теперь на компоненте people page нет кода который отлавливает ошибки
+// этот код перешел в отдельный компонент который можно переиспользовать в любой части приложения и может отлавливать ошибки
+export default class PeoplePage extends Component {
+    swapiService = new SwapiService
+    state = {
+        selectedPerson: 3,
+    }
+
+
+    onPersonSelected = (selectedPerson) => {
+        this.setState({ selectedPerson })
+    }
+
+    render() {
+        // if (this.state.hasError) {
+        //     return <ErrorIndicator />
+        // }
 
         const itemList = (
             <ItemList
                 onItemSelected={this.onPersonSelected}
                 getData={this.swapiService.getAllPeople}
-                renderItem={({ name, gender, birthYear }) => (
-                    `${name} (${gender}, ${birthYear})`)}
-            />
+            >
+                {/* Функция которая будет описывать как выгдядит тело компонента
+                Получить доступ к этой функции из компонента если у функции нет имени */}
+                {(i) => (
+                    `${i.name} (${i.birthYear})`
+                )}
+            </ItemList>
         )
 
         const personDetails = (
-            <PersonDetails personId={this.state.selectedPerson} />
+            <ErrorBoundary>
+                <PersonDetails personId={this.state.selectedPerson} />
+            </ErrorBoundary>
         )
 
         return (
