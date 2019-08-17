@@ -60,6 +60,7 @@ export default class App extends Component {
           {/* <PeoplePage /> */}
           <div className="row mb2">
             <div className="col-md-6">
+              {/* При клике на компонент получаем id и изменяем state selectedPerson */}
               <ItemList OnItemSelected={this.OnPersonSelected} 
               /*
               Компонент может использовать функцию для получения данных
@@ -70,10 +71,13 @@ export default class App extends Component {
               */  
 
               getData={this.swapiService.getAllPlanets}
-              
+              // Передаем функцию которая занимается рендерингом какой либо части компонента
+              // или всего компонента паттерн называется рендер функция
+              renderItem={(item) => (<span>{item.name} <button>!</button></span>)}
               />
             </div>
             <div className="col-md-6">
+              {/* Получаем id из item-list и передаем id в компонент  PersonDetails */}
               <PersonDetails personId={this.state.selectedPerson}/>
             </div>
           </div>
@@ -82,6 +86,7 @@ export default class App extends Component {
             <div className="col-md-6">
               <ItemList OnItemSelected={this.OnPersonSelected} 
               getData={this.swapiService.getAllStarships}
+              renderItem={(item) => item.name}
               
               />
             </div>
