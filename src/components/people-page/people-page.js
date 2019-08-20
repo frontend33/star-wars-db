@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import './people-page.css'
 import ItemList from '../item-list';
-import PersonDetails from '../person-details';
+import ItemDetails from '../item-details';
 import ErrorIndicator from '../error-indicator';
 import SwapiService from '../services/swapi-service';
 
-const Row = ({ left, right }) => {
+export const Row = ({ left, right }) => {
     return (
         <div className="row mb2">
             <div className="col-md-6">
@@ -17,6 +17,7 @@ const Row = ({ left, right }) => {
         </div>
     )
 }
+
 
 class ErrorBoundary extends Component {
     state = {
@@ -70,7 +71,7 @@ export default class PeoplePage extends Component {
 
         const personDetails = (
             <ErrorBoundary>
-                <PersonDetails personId={this.state.selectedPerson} />
+                <ItemDetails personId={this.state.selectedPerson} />
             </ErrorBoundary>
         )
 

@@ -3,7 +3,7 @@ import './item-list.css'
 import SwapiService from '../services/swapi-service';
 import Spinner from '../spinner';
 export default class ItemList extends Component {
-    swapiService = new SwapiService
+    swapiService = new SwapiService()
     state = {
         itemList: null
     }
@@ -18,38 +18,52 @@ export default class ItemList extends Component {
                 })
             })
     }
-    renderItems(arr) {
-        return arr.map((item) => {
-            const { id } = item
-            // this props children это обращение к тому что мы передали в теле к этому элементу
+    // renderItems(arr) {
+    //     return arr.map((item) => {
+    //         const { id } = item
+    //         const label = this.props.children(item);
+    //         return (
+    //             <li className="list-group-item"
+    //                 key={id}
+    //                 onClick={() => this.props.onItemSelected(id)}>
+    //                 {label}
+    //             </li>
+    //         )
+    //     })
+    // }
+
+     // this props children это обращение к тому что мы передали в теле к этому элементу
             // const label = this.props.children(item)
-            const label = this.props.children(item);
-            return (
-                <li className="list-group-item"
-                    key={id}
-                    // При клике на компонент передаем его id родителю для детального просмотра
-                    onClick={() => this.props.onItemSelected(id)}>
-                        {/* Передадим функцию что бы отображать разные условия item list */}
-                    {/* {name} */}
+            renderItems(arr) {
+              return arr.map((item) => {
+                const { id } = item;
+                const label = this.props.children(item);
+          
+                return (
+                  <li className="list-group-item"
+                      key={id}
+                      onClick={() => this.props.onItemSelected(id)}>
                     {label}
-
-                </li>
-            )
-        })
-    }
-
-    render() {
-        const { itemList } = this.state
-        if (!itemList) {
-            return <Spinner />
-        }
-
-        const items = this.renderItems(itemList)
-        return (
-            <ul className="item-list item-list-group" >
-                {items}
-            </ul>
-        )
-    }
-
-}
+                  </li>
+                );
+              });
+            }
+          
+            render() {
+          
+              const { itemList } = this.state;
+          
+              if (!itemList) {
+                return <Spinner />;
+              }
+          
+              const items = this.renderItems(itemList);
+          
+              return (
+                <ul className="item-list list-group">
+                  {items}
+                </ul>
+              );
+            }
+          }
+          
