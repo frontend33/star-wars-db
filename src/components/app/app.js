@@ -18,7 +18,7 @@ export default class App extends Component {
   swapiService = new SwapiService()
   state = {
     showRandomPlanet: true,
-    selectedPerson: 5,
+    // selectedPerson: 5,
     hasError: false
   }
   toggleRandomPlanet = () => {
@@ -29,11 +29,11 @@ export default class App extends Component {
     })
   }
 
-  OnPersonSelected = (id) => {
-    this.setState( {
-      selectedPerson: id
-    })
-  }
+  // OnPersonSelected = (id) => {
+  //   this.setState( {
+  //     selectedPerson: id
+  //   })
+  // }
 
   componentDidCatch() {
     console.log('componentDidCatch')
@@ -49,7 +49,10 @@ export default class App extends Component {
     const { getPerson,
             getStarship,
             getPersonImage,
-            getStarshipImage } = this.swapiService;
+            getStarshipImage,
+            getAllPeople,
+            getAllPlanets
+          } = this.swapiService;
 
     const personDetails = (
       <ItemDetails
@@ -68,7 +71,6 @@ export default class App extends Component {
         itemId={5}
         getData={getStarship}
         getImageUrl={getStarshipImage}>
-
         <Record field="model" label="Model" />
         <Record field="length" label="Length" />
         <Record field="costInCredits" label="Cost" />
@@ -80,10 +82,22 @@ export default class App extends Component {
       <ErrorBoundry>
         <div className="stardb-app">
           <Header />
+          <ItemList
+              onItemSelected={() => {}}
+              getData={getAllPeople} >
+                {({name}) => <span>{name}</span> } 
+          </ItemList>
+          
+          <ItemList
+              onItemSelected={() => {}}
+              getData={getAllPlanets} >
+              {({name}) => <span>{name}</span> }  
+          </ItemList>
+          
 
-          <Row
+          {/* <Row
             left={personDetails}
-            right={starshipDetails} />
+            right={starshipDetails} /> */}
         </div>
       </ErrorBoundry>
     );

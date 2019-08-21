@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-
 import "./item-details.css";
 import SwapiService from "../services/swapi-service";
 import ErrorButton from "../error-button/error-button";
@@ -9,6 +8,7 @@ const Record = ({ item, field, label }) => {
     <li className="list-group-item">
       <span className="term">{label}</span>
       <span>{ item[field] }</span>
+      <span>{item}34</span>
     </li>
   );
 };
@@ -65,13 +65,20 @@ export default class ItemDetails extends Component {
     return (
       <div className="item-details card">
         <img className="item-image"
-          src={image}
+          // src={image}
           alt="item"/>
 
         <div className="card-body">
           <h4>{name}</h4>
-          <ul className="list-group list-group-flush">
+          {/* Компонент может решать как именно использовать children
+          Функция React.Children.map() упрощает обработку props.children
+          Child элементы можно заменять, оборачивать, в другие компоненты или скрывать (если вернуть null) */}
+          <ul className="list-group list-group- flush">
+            {/* {this.props.children} */}
             {
+              // В реакте есть специальный апи для работы с детьми React.Children.map приведет все к одному типу
+              // Пройдется по всем child и обработает все случае (null, undefined)
+              // Функция позволяет пройтись проитерировать this.props.children и сделать что то с каждым child
               React.Children.map(this.props.children, (child) => {
                 return React.cloneElement(child, { item });
               })

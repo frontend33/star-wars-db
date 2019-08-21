@@ -15,7 +15,6 @@ export default class SwapiService {
     getAllPeople = async () => {
         const res = await this.getResource(`/people/`)
         console.log('getAllPeople', res)
-         console.log('getAllPeople', res.results)
         return res.results.map(this._transformPerson)
     }
     
@@ -95,8 +94,8 @@ export default class SwapiService {
     
     
 
-const swapi = new SwapiService()
-swapi.getPerson(3).then((p) => {
-    console.log(p.name)
-})
+// const swapi = new SwapiService()
+// swapi.getPerson(3).then((p) => {
+//     console.log(p.name)
+// })
 
