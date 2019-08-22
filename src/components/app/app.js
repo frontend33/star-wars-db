@@ -63,29 +63,29 @@ export default class App extends Component {
             getAllPlanets
           } = this.swapiService;
 
-          const personDetails = (
-            <ItemDetails
-              itemId={11}
-              getData={getPerson}
-              getImageUrl={getPersonImage} >
+          // const personDetails = (
+          //   <ItemDetails
+          //     itemId={11}
+          //     getData={getPerson}
+          //     getImageUrl={getPersonImage} >
       
-              <Record field="gender" label="Gender" />
-              <Record field="eyeColor" label="Eye Color" />
+          //     <Record field="gender" label="Gender" />
+          //     <Record field="eyeColor" label="Eye Color" />
       
-            </ItemDetails>
-          );
+          //   </ItemDetails>
+          // );
       
-          const starshipDetails = (
-            <ItemDetails
-              itemId={5}
-              getData={getStarship}
-              getImageUrl={getStarshipImage}>
+          // const starshipDetails = (
+          //   <ItemDetails
+          //     itemId={5}
+          //     getData={getStarship}
+          //     getImageUrl={getStarshipImage}>
       
-              <Record field="model" label="Model" />
-              <Record field="length" label="Length" />
-              <Record field="costInCredits" label="Cost" />
-            </ItemDetails>
-          );
+          //     <Record field="model" label="Model" />
+          //     <Record field="length" label="Length" />
+          //     <Record field="costInCredits" label="Cost" />
+          //   </ItemDetails>
+          // );
       
 
     return (
@@ -98,17 +98,12 @@ export default class App extends Component {
 
           <StarshipDetails itemId={9} />
 
-          <PersonList>
-            {({name}) => <span>{name}</span>}
-          </PersonList>
+          <PersonList/>
+           
 
-          <StarshipList>
-            {({name}) => <span>{name}</span>}
-          </StarshipList>
+          <StarshipList/>
 
-          <PlanetList>
-            {({name}) => <span>{name}</span>}
-          </PlanetList>
+          <PlanetList/>
 
           {/* <Row
             left={personDetails}
