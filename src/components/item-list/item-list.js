@@ -1,7 +1,5 @@
-import React, { Component } from "react";
+import React from "react";
 import "./item-list.css";
-import {withData} from '../hoc-helper'
-import SwapiService from "../services/swapi-service";
 // import Spinner from "../spinner";
 // теперь наш higher order component withData находится в своем собственном бале
 // В компонент ItemList передаем аргумент props - который получает данные из компонента высшего порядка
@@ -29,10 +27,12 @@ const ItemList = props => {
   return <ul className="item-list list-group">{items}</ul>;
 };
 
-const { getAllPeople } = new SwapiService()
+export default ItemList
+
+// const { getAllPeople } = new SwapiService()
 // В экспорт передаем что хотим создать ItemList который обернут в компонент который занимается мененджментом данных
 // Мы разделили компонент на две части одна часть отвечает исключительно за отрисовку ItemList
 // Вторая часть отвечает за логику работы с сетью
 // В импортированную функцию передаем компонент и функцию которая вернет промис с данными с сервера
 // тем самым мы используем патерн реакт, разделяя компонент отрисовки с компонентам отвечающим с получением и манипуляциями данных с сервера 
-export default withData(ItemList, getAllPeople);
+// export default withData(ItemList, getAllPeople);

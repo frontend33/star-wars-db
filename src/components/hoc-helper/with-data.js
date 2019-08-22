@@ -23,7 +23,7 @@ const withData = (View, getData) => {
         if (!data) {
           return <Spinner />;
         }
-        console.log('this.props', this.props)
+        // console.log('this.props', this.props)
         // Отрисовываем компонент полученный из аргумента и добавляем в него все данные которые посчитали в данном компоненте
         // Мы передаем все данные из пропс и в этот же объект передаем ключ data - с данными с сервера
         // в компоненте все данные лежат в аргументе props const { data, onItemSelected, children: renderLabel } = props;
