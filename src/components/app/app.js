@@ -12,6 +12,11 @@ import ErrorIndicator from '../error-indicator';
 import PeoplePage from '../people-page'
 import Row from '../Row'
 import SwapiService from '../services/swapi-service';
+import DummySwapiService from '../services/dummy-swapi-service'
+
+import { SwapiServiceProvider } from '../swapi-service-context'
+
+
 
 import {
   PersonDetails,
@@ -24,7 +29,7 @@ import {
 
 
 export default class App extends Component {
-  swapiService = new SwapiService()
+  swapiService = new DummySwapiService()
   state = {
     showRandomPlanet: true,
     // selectedPerson: 5,
@@ -89,77 +94,24 @@ export default class App extends Component {
       
 
     return (
-      <div>
-        <div className="stardb-app">
-          <Header />
-          <PersonDetails itemId={11} />
+      <ErrorBoundry>
+        {/* Теперь любой компонент приложения будет иметь доступ к сервису котоырй передадим в SwapiServiceProvider */}
+        <SwapiServiceProvider value={this.swapiService}>
+          <div className="stardb-app">
+            <Header />
+            <PersonDetails itemId={11} />
+            <PlanetDetails itemId={5} />
+            <StarshipDetails itemId={9} />
+            <PersonList/>
+            <StarshipList/>
+            <PlanetList/>
 
-          <PlanetDetails itemId={5} />
-
-          <StarshipDetails itemId={9} />
-
-          <PersonList/>
-           
-
-          <StarshipList/>
-
-          <PlanetList/>
-
-          {/* <Row
-            left={personDetails}
-            right={starshipDetails} /> */}
-        </div>
-      </div>
+            {/* <Row
+              left={personDetails}
+              right={starshipDetails} /> */}
+          </div>
+        </SwapiServiceProvider>
+      </ErrorBoundry>
     );
   }
 }
-
-//     return (
-//       <div className="stardb-app">
-//         <Header />
-//         { planet }
-
-//         <div className="row mb2 button-row">
-//           <button
-//             className="toggle-planet btn btn-warning btn-lg"
-//             onClick={this.toggleRandomPlanet}>
-//             Toggle Random Planet
-//           </button>
-//           <ErrorButton />
-//         </div>
-
-//         <PeoplePage />
-
-//         {/* <Row>
-          
-//         </Row> */}
-
-//        <div className="row mb2">
-//           <div className="col-md-6">
-//             <ItemList
-//               onItemSelected={this.onPersonSelected}
-//               getData={this.swapiService.getAllPlanets} />
-//           </div>
-//           <div className="col-md-6">
-//             <ItemDetails personId={this.state.selectedPerson} />
-//           </div>
-//         </div>
-
-//        <div className="row mb2">
-//           <div className="col-md-6">
-//             {personDetails}
-//             {/* <personDetails></personDetails> */}
-//             {/* <ItemList
-//               onItemSelected={this.onPersonSelected}
-//               getData={this.swapiService.getAllStarships} /> */}
-//           </div>
-//           <div className="col-md-6">
-//             <ItemDetails personId={this.state.selectedPerson} />
-//           </div>
-//         </div> 
-
-//       </div>
-//     );
-//   }
-// }
-
