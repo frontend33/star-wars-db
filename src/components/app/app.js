@@ -29,7 +29,9 @@ import {
 
 
 export default class App extends Component {
+  // Можно легко менять апи и данные с тестовых на боевые
   swapiService = new DummySwapiService()
+  // swapiService = new SwapiService()
   state = {
     showRandomPlanet: true,
     // selectedPerson: 5,
