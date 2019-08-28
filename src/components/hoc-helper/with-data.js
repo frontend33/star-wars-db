@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Spinner from "../spinner";
 import ErrorIndicator from "../error-indicator";
+import { thisTypeAnnotation } from "@babel/types";
 // В этот компонент обертку мы вынесем всю часть получения данных с сервера лоадеров обработки ошибок и Вынесли весь state
 // В аргумент view можем передать любой компонент который захотим использовать внутри
 const withData = View => {
@@ -10,12 +11,20 @@ const withData = View => {
       data: null
     };
     componentDidMount() {
-      this.props.getData().then(data => {
-        // Передаем ответ сервера в state
-        this.setState({
-          data
-        });
-      });
+      this.update()
+    }
+    componentDidUpdate(prevProps) {
+      if(this.props.getData !== prevProps.getData) {
+        this.update()
+      }
+    }
+    update() {
+      this.props.getData()
+        .then((data)=> {
+          this.setState({
+            data
+          })
+        })
     }
     render() {
       const { data } = this.state;
