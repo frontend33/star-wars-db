@@ -2,7 +2,9 @@ import React from 'react'
 import ItemList from '../item-list'
 import {withData, withSwapiService} from '../hoc-helper'
 
-const withChildFunction = (Wrapped, fn) => {
+// withChildFunction возвращает функцию fn которая принимает то что передали в качестве child
+//  а вторая функция принимает один аргумент который мы будем оборачивать
+const withChildFunction = (fn) => (Wrapped ) => {
     return (props) => {
         return (
             <Wrapped {...props} >
@@ -35,25 +37,37 @@ const mapStarshipMethodsToProps = (swapiService) => {
         getData: swapiService.getAllStarships
     }
 }
-
 // Композиция функций
-const PersonList = withSwapiService(
+const PersonList = withSwapiService(mapPersonMethodsToProps)(
     withData(
-      withChildFunction(ItemList, renderName)),
-  mapPersonMethodsToProps);
+      withChildFunction(renderName)(
+          ItemList)));
 
-const PlanetList = withSwapiService(withData(
-    withChildFunction(ItemList, renderName)),
-    mapPlanetMethodsToProps
+const PlanetList = withSwapiService(mapPlanetMethodsToProps)(
+    withData(
+    withChildFunction(renderName)(ItemList))
 )
 
-const StarshipList = withSwapiService(withData(
-    withChildFunction(ItemList, renderModalAndName)),
-    mapStarshipMethodsToProps
+const StarshipList = withSwapiService(mapStarshipMethodsToProps)(withData(
+    withChildFunction(renderModalAndName)(ItemList))
 )
+
+
+// const PlanetList = withSwapiService(withData(
+//     withChildFunction(ItemList, renderName)),
+//     mapPlanetMethodsToProps
+// )
+
+// const StarshipList = withSwapiService(withData(
+//     withChildFunction(ItemList, renderModalAndName)),
+//     mapStarshipMethodsToProps
+// )
 
 export {
     PersonList,
     PlanetList,
     StarshipList
 }
+
+// const add = (a) => (b) => a + b
+// add(a)(b)

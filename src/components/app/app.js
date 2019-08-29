@@ -41,8 +41,9 @@ export default class App extends Component {
           <div className="stardb-app">
             <Header onServiceChange={this.onServiceChange} />
            <RandomPlanet/>
-            <PeoplePage />
-            <PlanetsPage />
+
+            <PeoplePage /> 
+          <PlanetsPage />
             <StarshipsPage />
             {/* <Row left={<PersonList />} right={<PersonDetails itemId={11} />} /> */}
 

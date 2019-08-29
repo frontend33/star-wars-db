@@ -12,7 +12,6 @@ const PersonDetails = (props) => {
   );
 };
 
-
 // Возьмем определенные методы из swapiService и присвоим определенным свойствам в компоненте
 const mapMethodsToProps = (swapiService) => {
     return {
@@ -21,4 +20,4 @@ const mapMethodsToProps = (swapiService) => {
     }
 }
 
-export default withSwapiService(PersonDetails, mapMethodsToProps);
+export default withSwapiService(mapMethodsToProps)(PersonDetails);
