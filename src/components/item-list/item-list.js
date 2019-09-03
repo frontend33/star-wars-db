@@ -1,5 +1,6 @@
 import React from "react";
 import "./item-list.css";
+import propTypes from 'prop-types'
 // import Spinner from "../spinner";
 // теперь наш higher order component withData находится в своем собственном бале
 // В компонент ItemList передаем аргумент props - который получает данные из компонента высшего порядка
@@ -27,6 +28,16 @@ const ItemList = props => {
   return <ul className="item-list list-group">{items}</ul>;
 };
 
+ItemList.defaultProps = {
+
+  onItemSelected: () => {}
+}
+ItemList.propTypes = {
+  onItemSelected: propTypes.func,
+  data: propTypes.arrayOf(propTypes.object).isRequired,
+  children: propTypes.func.isRequired
+
+}
 export default ItemList
 
 // const { getAllPeople } = new SwapiService()

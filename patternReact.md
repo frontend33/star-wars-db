@@ -243,3 +243,38 @@ const MyComp = compose (
     withData,
     withChild(renderName)
 )(SimpleComponent)
+
+**Default props**
+В файле random-planet.js 
+Позволяет установить значения по умолчанию для свойств
+const Comp = ({name}) => (<p>{name}</p>) //отрендерит Bob
+Comp.defaultProps = {
+    name: 'Bob'
+}
+
+### propTypes
+Позволяет проверить значение свойств (props), которое получает компонент
+
+ ```
+const Comp = ({ name }) => (<p>{name}</p>)
+Comp.propTypes = {
+    name: (props, propName, compName) => {...}
+}
+Проверка срабатывает после defaultProps
+функция валидатор возвращает null или объект Error
+```
+### Библиотека prop-types набор стандартных функций валидаторов
+MyComponent.propTypes = {
+    'some_number': PropTypes.number,
+    'some_mandatory_number': PropTypes.number.isRequired
+}
+так же есть airbnb-prop-types
+Если есть компонента который должен получать в качестве свойства User {name, row}
+MyComp.propTypes = {
+    user: PropTypes.shape({
+        name: PropTypes.string,
+        //Можно передать массив определенных значений
+        role: PropTypes.oneOf('user', 'admin')
+        <!-- role: PropTypes.string -->
+    })
+}
