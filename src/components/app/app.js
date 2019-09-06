@@ -10,6 +10,8 @@ import DummySwapiService from "../services/dummy-swapi-service";
 import { SwapiServiceProvider } from "../swapi-service-context";
 import { PeoplePage, PlanetsPage, StarshipsPage } from "../pages";
 
+import { BrowserRouter as Router, Route } from "react-router-dom";
+
 export default class App extends Component {
   // Можно легко менять апи и данные с тестовых на боевые
   // swapiService = new SwapiService()
@@ -37,22 +39,19 @@ export default class App extends Component {
         {/* Теперь любой компонент приложения будет иметь доступ к сервису котоырй передадим в SwapiServiceProvider */}
         {/* Если значение которое используем в приложении обновились, то и компоненты ниже по иерархии тоже обновятся */}
         <SwapiServiceProvider value={this.state.swapiService}>
-          <div className="stardb-app">
-            <Header onServiceChange={this.onServiceChange} />
-            <RandomPlanet />
+          <Router>
+            <div className="stardb-app">
+              <Header onServiceChange={this.onServiceChange}/>
+              <RandomPlanet />
+              <Route path="/" render={() => <h2>Welcome to starDB</h2>} exact/>
+              <Route path="/people" render={() => <h2>People</h2> }></Route>
+              <Route path="/people" component={PeoplePage}></Route>
+              <Route path="/planets" component={PlanetsPage}></Route>
+              <Route path="/starships" component={StarshipsPage}></Route>
 
-            <PeoplePage />
-            <PlanetsPage />
-            <StarshipsPage />
-            {/* <Row left={<PersonList />} right={<PersonDetails itemId={11} />} /> */}
-
-            {/* <Row
-              left={<StarshipList />}
-              right={<StarshipDetails itemId={9} />}
-            />
-
-            <Row left={<PlanetList />} right={<PlanetDetails itemId={5} />} /> */}
-          </div>
+              {/* <Row left={<PersonList />} right={<PersonDetails itemId={11} />} /> */}
+            </div>
+          </Router>
         </SwapiServiceProvider>
       </ErrorBoundry>
     );

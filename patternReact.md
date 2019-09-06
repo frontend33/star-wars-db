@@ -278,3 +278,16 @@ MyComp.propTypes = {
         <!-- role: PropTypes.string -->
     })
 }
+
+### Основы React Router
+ ```
+<Router>
+    <Route path="/blog" component={Blog}></Route>
+    <Route path="/about" component={About}></Route>
+</Router>
+Есть и другие библиотеки (UI-Router)
+```
+В Route можно передать render функцию
+<Route path="/hi" render={ () => <p>Hi</p> } />
+Route работает как фильтр - сравнивая path с текущим адресом он решает, отрисовать содержимое или нет
+Параметр exact говорит, что нужно использовать точное совпадение (а не  path является частью адреса)
