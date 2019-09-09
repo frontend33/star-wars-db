@@ -291,3 +291,21 @@ MyComp.propTypes = {
 <Route path="/hi" render={ () => <p>Hi</p> } />
 Route работает как фильтр - сравнивая path с текущим адресом он решает, отрисовать содержимое или нет
 Параметр exact говорит, что нужно использовать точное совпадение (а не  path является частью адреса)
+
+### Динамические пути
+В Route можно передать параметры:
+:id может быть любой строкой, которая идет после /people/
+Если не установить exact, то путь /people будет срабатывать всегда когда срабатывает /people/:id
+
+### withRouter()
+ withRouter() это компонент высшего порядка, он передает компоненту объекты react router
+ ```
+ const MyComponent = ({match, location, history}) => {
+     return (
+         <Button onClick={() => history.push(`/new/path`)}> Click me
+         </Button>
+     )
+ } 
+ export default withRouter(MyComponent)
+ ```
+ 

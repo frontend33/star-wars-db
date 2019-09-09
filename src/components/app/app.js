@@ -11,6 +11,7 @@ import { SwapiServiceProvider } from "../swapi-service-context";
 import { PeoplePage, PlanetsPage, StarshipsPage } from "../pages";
 
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import { StarshipDetails } from "../sw-components";
 
 export default class App extends Component {
   // Можно легко менять апи и данные с тестовых на боевые
@@ -41,14 +42,23 @@ export default class App extends Component {
         <SwapiServiceProvider value={this.state.swapiService}>
           <Router>
             <div className="stardb-app">
-              <Header onServiceChange={this.onServiceChange}/>
+              <Header onServiceChange={this.onServiceChange} />
               <RandomPlanet />
-              <Route path="/" render={() => <h2>Welcome to starDB</h2>} exact/>
-              <Route path="/people" render={() => <h2>People</h2> }></Route>
+              <Route path="/" exact render={() => <h2>Welcome to starDB</h2>} />
+              <Route path="/people" render={() => <h2>People</h2>}></Route>
               <Route path="/people" component={PeoplePage}></Route>
               <Route path="/planets" component={PlanetsPage}></Route>
-              <Route path="/starships" component={StarshipsPage}></Route>
-
+              <Route path="/starships" exact component={StarshipsPage} />
+              <Route
+                path='/starships/:id'
+                // В рендер функцию роутер передаст объект с тремя специальными параметрами 
+                render={({match}) => {
+                  const { id } = match.params
+                  console.log('params',match)
+                  console.log('params',match.params)
+                  return <StarshipDetails itemId={id}/>
+                }}
+              />
               {/* <Row left={<PersonList />} right={<PersonDetails itemId={11} />} /> */}
             </div>
           </Router>
