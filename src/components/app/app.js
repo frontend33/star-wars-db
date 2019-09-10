@@ -16,7 +16,7 @@ import {
   SecretPage
 } from "../pages";
 
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import { StarshipDetails } from "../sw-components";
 
 export default class App extends Component {
@@ -32,8 +32,8 @@ export default class App extends Component {
   onLogin = () => {
     this.setState({
       isLoggedIn: true
-    })
-  }
+    });
+  };
 
   onServiceChange = () => {
     console.log("click");
@@ -48,7 +48,7 @@ export default class App extends Component {
   };
 
   render() {
-    const { isLoggedIn } = this.state
+    const { isLoggedIn } = this.state;
 
     return (
       <ErrorBoundry>
@@ -59,30 +59,43 @@ export default class App extends Component {
             <div className="stardb-app">
               <Header onServiceChange={this.onServiceChange} />
               <RandomPlanet />
-              <Route path="/" exact render={() => <h2>Welcome to starDB</h2>} />
-              <Route path="/people" render={() => <h2>People</h2>}></Route>
-              <Route path="/people/:id?" component={PeoplePage}></Route>
-              <Route path="/planets" component={PlanetsPage}></Route>
-              <Route path="/starships" exact component={StarshipsPage} />
-              <Route
-                path="/starships/:id"
-                // В рендер функцию роутер передаст объект с тремя специальными параметрами
-                render={({ match }) => {
-                  const { id } = match.params;
-                  return <StarshipDetails itemId={id} />;
-                }}
-              />
-              <Route
-                path="/login"
-                render={() =>
-                  <LoginPage
-                    isLoggedIn={isLoggedIn}
-                    onLogin={this.onLogin}
-
-                    />} />
-              <Route
-                path="/secret"
-                render={() => <SecretPage isLoggedIn={isLoggedIn}/>} />
+              <Switch>
+                <Route
+                  path="/"
+                  exact
+                  render={() => <h2>Welcome to starDB</h2>}
+                />
+                {/* Благодаря  <Switch> можем перенести  */}
+                {/* <Route path="/people" render={() => <h2>People</h2>}></Route> */}
+                <Route path="/people/:id?" component={PeoplePage}></Route>
+                <Route path="/planets" component={PlanetsPage}></Route>
+                <Route path="/starships" exact component={StarshipsPage} />
+                <Route
+                  path="/starships/:id"
+                  // В рендер функцию роутер передаст объект с тремя специальными параметрами
+                  render={({ match }) => {
+                    const { id } = match.params;
+                    return <StarshipDetails itemId={id} />;
+                  }}
+                />
+                <Route
+                  path="/login"
+                  render={() => (
+                    <LoginPage isLoggedIn={isLoggedIn} onLogin={this.onLogin} />
+                  )}
+                />
+                <Route
+                  path="/secret"
+                  render={() => <SecretPage isLoggedIn={isLoggedIn} />}
+                />
+                {/*Если не один из роутов не сработал можно вызвать Redirect 
+                Если мы не передадим path такой роут все равно будет работать и если он стоит последним срабатывать всегда когда не один из роутов не сработал
+                */}
+                <Route
+                  render={() => <h2>Page no found</h2>}
+                />
+                {/* <Redirect /> */}
+              </Switch>
               {/* <Row left={<PersonList />} right={<PersonDetails itemId={11} />} /> */}
             </div>
           </Router>
