@@ -8,7 +8,13 @@ import SwapiService from "../services/swapi-service";
 import DummySwapiService from "../services/dummy-swapi-service";
 // import Row from "../Row";
 import { SwapiServiceProvider } from "../swapi-service-context";
-import { PeoplePage, PlanetsPage, StarshipsPage } from "../pages";
+import {
+  PeoplePage,
+  PlanetsPage,
+  StarshipsPage,
+  LoginPage,
+  SecretPage
+} from "../pages";
 
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { StarshipDetails } from "../sw-components";
@@ -19,8 +25,15 @@ export default class App extends Component {
   state = {
     showRandomPlanet: true,
     // Чтоб бы правильно изменять значения, необходимо правильно перенести наш свапи сервис
-    swapiService: new SwapiService()
+    swapiService: new SwapiService(),
+    isLoggedIn: false
   };
+
+  onLogin = () => {
+    this.setState({
+      isLoggedIn: true
+    })
+  }
 
   onServiceChange = () => {
     console.log("click");
@@ -35,6 +48,8 @@ export default class App extends Component {
   };
 
   render() {
+    const { isLoggedIn } = this.state
+
     return (
       <ErrorBoundry>
         {/* Теперь любой компонент приложения будет иметь доступ к сервису котоырй передадим в SwapiServiceProvider */}
@@ -50,15 +65,24 @@ export default class App extends Component {
               <Route path="/planets" component={PlanetsPage}></Route>
               <Route path="/starships" exact component={StarshipsPage} />
               <Route
-                path='/starships/:id'
-                // В рендер функцию роутер передаст объект с тремя специальными параметрами 
-                render={({match}) => {
-                  const { id } = match.params
-                  console.log('params',match)
-                  console.log('params',match.params)
-                  return <StarshipDetails itemId={id}/>
+                path="/starships/:id"
+                // В рендер функцию роутер передаст объект с тремя специальными параметрами
+                render={({ match }) => {
+                  const { id } = match.params;
+                  return <StarshipDetails itemId={id} />;
                 }}
               />
+              <Route
+                path="/login"
+                render={() =>
+                  <LoginPage
+                    isLoggedIn={isLoggedIn}
+                    onLogin={this.onLogin}
+
+                    />} />
+              <Route
+                path="/secret"
+                render={() => <SecretPage isLoggedIn={isLoggedIn}/>} />
               {/* <Row left={<PersonList />} right={<PersonDetails itemId={11} />} /> */}
             </div>
           </Router>
