@@ -7,7 +7,6 @@ import propTypes from 'prop-types'
 // (мы вынесли всю логику расчетов в компонент обертку поэтому все запросы идут с верхнего компонента) 
 
 const ItemList = props => {
-  console.log(props)
   // Деструктурируем данные из аргумента
   const { data, onItemSelected, children: renderLabel } = props;
   // Нельзя изменять компонент напрямую, мы копируем данные из аргумента и итерируем по объекту
@@ -29,9 +28,10 @@ const ItemList = props => {
 };
 
 ItemList.defaultProps = {
-
   onItemSelected: () => {}
 }
+
+
 ItemList.propTypes = {
   onItemSelected: propTypes.func,
   data: propTypes.arrayOf(propTypes.object).isRequired,
